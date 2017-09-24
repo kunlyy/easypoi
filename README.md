@@ -27,15 +27,14 @@ The main features of EasyPoi
 --------------------------
 1. exquisite design, easy to use
 2. interface rich, easy to expand
-3., default values are many, write, less, do, more
-4.AbstractView support, web export can be simple and clear
+3. default values are many, write, less, do, more
+4. AbstractView support, web export can be simple and clear
 ---------------------------
 Several entry tool classes for EasyPoi
 ---------------------------
-1.ExcelExportUtil Excel export (
-General export, template export)
-2.ExcelImportUtil Excel import
-3.WordExportUtil Word export (support only docx, Doc version POI exist picture of bug, do not support)
+1. ExcelExportUtil Excel export (General export, template export)
+2. ExcelImportUtil Excel import
+3. WordExportUtil Word export (support only docx, Doc version POI exist picture of bug, do not support)
 ---------------------------
 About Excel export XLS and XLSX distinction
 ---------------------------
@@ -45,10 +44,10 @@ About Excel export XLS and XLSX distinction
 ---------------------------
 Description of several works
 ---------------------------
-1.easypoi father package - everyone knows
-2.easypoi-annotation foundation annotation package, role and entity object, after splitting convenient Maven multi project dependency management
-3.easypoi-base import and export toolkit, you can complete the Excel export, import, export Word, Excel export function
-4.easypoi-web coupled with spring-mvc, based on AbstractView, greatly simplifying the export function under spring-mvc
+1. easypoi father package - everyone knows
+2. easypoi-annotation foundation annotation package, role and entity object, after splitting convenient Maven multi project dependency management
+3. easypoi-base import and export toolkit, you can complete the Excel export, import, export Word, Excel export function
+4. easypoi-web coupled with spring-mvc, based on AbstractView, greatly simplifying the export function under spring-mvc
 The 5.sax import uses the xercesImpl package (this package can cause a strange problem), and the word export uses poi-scratchpad as an optional package
 --------------------------
 maven 
