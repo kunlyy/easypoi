@@ -16,9 +16,8 @@ EasyPoi Excel & Word Utils
 **[http://www.afterturn.cn/doc/easypoi.html](http://www.afterturn.cn/doc/easypoi.html)**
 
 
-basedemo
+[base demo](https://github.com/lemur-open/easypoi/blob/master/basedemo.md)
 
-basedemo.md
 
 [testProject](http://git.oschina.net/jueyue/easypoi-test): http://git.oschina.net/jueyue/easypoi-test
 
