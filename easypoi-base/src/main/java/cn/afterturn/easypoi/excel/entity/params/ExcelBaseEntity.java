@@ -31,9 +31,13 @@ public class ExcelBaseEntity {
      */
     protected String     name;
     /**
+     * 对应groupName
+     */
+    protected String     groupName;
+    /**
      * 对应type
      */
-    private int          type = BaseEntityTypeConstants.StringType;
+    private int          type = BaseEntityTypeConstants.STRING_TYPE;
     /**
      * 数据库格式
      */
@@ -115,6 +119,15 @@ public class ExcelBaseEntity {
 
     public boolean isHyperlink() {
         return hyperlink;
+    }
+
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public void setHyperlink(boolean hyperlink) {

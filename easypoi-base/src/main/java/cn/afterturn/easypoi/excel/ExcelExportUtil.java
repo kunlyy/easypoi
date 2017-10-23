@@ -28,8 +28,8 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.afterturn.easypoi.excel.entity.params.ExcelExportEntity;
-import cn.afterturn.easypoi.excel.export.ExcelBatchExportServer;
-import cn.afterturn.easypoi.excel.export.ExcelExportServer;
+import cn.afterturn.easypoi.excel.export.ExcelBatchExportService;
+import cn.afterturn.easypoi.excel.export.ExcelExportService;
 import cn.afterturn.easypoi.excel.export.template.ExcelExportOfTemplateUtil;
 
 /**
@@ -54,15 +54,15 @@ public class ExcelExportUtil {
      */
     public static Workbook exportBigExcel(ExportParams entity, Class<?> pojoClass,
                                           Collection<?> dataSet) {
-        ExcelBatchExportServer batachServer = ExcelBatchExportServer
-            .getExcelBatchExportServer(entity, pojoClass);
-        return batachServer.appendData(dataSet);
+        ExcelBatchExportService batchService = ExcelBatchExportService
+            .getExcelBatchExportService(entity, pojoClass);
+        return batchService.appendData(dataSet);
     }
 
     public static void closeExportBigExcel() {
-        ExcelBatchExportServer batachServer = ExcelBatchExportServer.getExcelBatchExportServer(null,
+        ExcelBatchExportService batchService = ExcelBatchExportService.getExcelBatchExportService(null,
             null);
-        batachServer.closeExportBigExcel();
+        batchService.closeExportBigExcel();
     }
 
     /**
@@ -75,16 +75,19 @@ public class ExcelExportUtil {
      */
     public static Workbook exportExcel(ExportParams entity, Class<?> pojoClass,
                                        Collection<?> dataSet) {
-        Workbook workbook;
-        if (ExcelType.HSSF.equals(entity.getType())) {
-            workbook = new HSSFWorkbook();
-        } else if (dataSet.size() < 10000) {
-            workbook = new XSSFWorkbook();
-        } else {
-            workbook = new SXSSFWorkbook();
-        }
-        new ExcelExportServer().createSheet(workbook, entity, pojoClass, dataSet);
+        Workbook workbook = getWorkbook(entity.getType(),dataSet.size());
+        new ExcelExportService().createSheet(workbook, entity, pojoClass, dataSet);
         return workbook;
+    }
+
+    private static Workbook getWorkbook(ExcelType type, int size) {
+        if (ExcelType.HSSF.equals(type)) {
+            return new HSSFWorkbook();
+        } else if (size < 100000) {
+            return new XSSFWorkbook();
+        } else {
+            return new SXSSFWorkbook();
+        }
     }
 
     /**
@@ -98,15 +101,8 @@ public class ExcelExportUtil {
      */
     public static Workbook exportExcel(ExportParams entity, List<ExcelExportEntity> entityList,
                                        Collection<? extends Map<?, ?>> dataSet) {
-        Workbook workbook;
-        if (ExcelType.HSSF.equals(entity.getType())) {
-            workbook = new HSSFWorkbook();
-        } else if (dataSet.size() < 10000) {
-            workbook = new XSSFWorkbook();
-        } else {
-            workbook = new SXSSFWorkbook();
-        }
-        new ExcelExportServer().createSheetForMap(workbook, entity, entityList, dataSet);
+        Workbook workbook = getWorkbook(entity.getType(),dataSet.size());;
+        new ExcelExportService().createSheetForMap(workbook, entity, entityList, dataSet);
         return workbook;
     }
 
@@ -119,15 +115,10 @@ public class ExcelExportUtil {
      * @return
      */
     public static Workbook exportExcel(List<Map<String, Object>> list, ExcelType type) {
-        Workbook workbook;
-        if (ExcelType.HSSF.equals(type)) {
-            workbook = new HSSFWorkbook();
-        } else {
-            workbook = new XSSFWorkbook();
-        }
+        Workbook workbook = getWorkbook(type,0);
         for (Map<String, Object> map : list) {
-            ExcelExportServer server = new ExcelExportServer();
-            server.createSheet(workbook, (ExportParams) map.get("title"),
+            ExcelExportService service = new ExcelExportService();
+            service.createSheet(workbook, (ExportParams) map.get("title"),
                 (Class<?>) map.get("entity"), (Collection<?>) map.get("data"));
         }
         return workbook;
